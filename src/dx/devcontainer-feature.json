@@ -1,0 +1,45 @@
+{
+  "id": "dx",
+  "version": "1.5.0",
+  "name": "Gildraen DX",
+  "description": "Installs the shared Gildraen development tools and agent resources.",
+  "documentationURL": "https://github.com/Gildraen/dx-dev-feature",
+  "options": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "chat.defaultToCopilotHarness": false,
+        "chat.editor.preferCopilotHarness": false,
+        "chat.editor.localAgent.enabled": true,
+        "chat.agentFilesLocations": {
+          ".agents/agents": true
+        }
+      }
+    }
+  },
+  "containerEnv": {
+    "DX_HOME": "/opt/dx",
+    "DX_AGENTS_HOME": "/opt/dx/components/agents",
+    "DX_TOOLS_HOME": "/opt/dx/components/tools",
+    "GH_CONFIG_DIR": "/var/lib/dx/devcontainer/.gh"
+  },
+  "mounts": [
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer",
+      "target": "/var/lib/dx/devcontainer",
+      "type": "bind"
+    }
+  ],
+  "dependsOn": {
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers-extra/features/go-task:1": {
+      "version": "3.53.1"
+    },
+    "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+      "packages": "git,jq,ripgrep,libatomic1"
+    }
+  }
+}

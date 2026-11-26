@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "DX Feature repository using the shared Gildraen Renovate preset.",
+  "extends": ["github>Gildraen/renovate-config#1.0.0"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update the pinned Dev Container CLI used by feature tests.",
+      "managerFilePatterns": ["/(^|/)feature-test\\.sh$/"],
+      "matchStrings": [
+        "@devcontainers/cli@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "@devcontainers/cli",
+      "datasourceTemplate": "npm"
+    }
+  ]
+}

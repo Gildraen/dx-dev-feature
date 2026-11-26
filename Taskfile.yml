@@ -1,0 +1,30 @@
+version: '3'
+
+includes:
+  tools:
+    taskfile: https://github.com/Gildraen/dx-tools/raw/340e66482239419544ed405079bce4e8395dbc6e/taskfiles/base.yml # v0.2.0
+
+tasks:
+  default:
+    desc: Show available tasks.
+    cmds:
+      - task --list
+
+  validate:
+    desc: Validate repository files, scripts, and workflows.
+    cmds:
+      - node scripts/validate-contract.mjs
+      - bash -n src/dx/install.sh src/dx/dx-mcp test/dx/test.sh scripts/feature-test.sh tests/*.sh
+      - bash scripts/validate-workflows.sh
+      - task --taskfile Taskfile.yml --list >/dev/null
+
+  test:
+    desc: Run offline runtime and repository contract tests.
+    cmds:
+      - bash tests/test-install.sh
+      - bash tests/test-repo-contract.sh
+
+  feature:test:
+    desc: Run the Dev Container Feature test suite with Docker.
+    cmds:
+      - bash scripts/feature-test.sh
