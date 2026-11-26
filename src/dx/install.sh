@@ -5,10 +5,10 @@ DX_HOME="${DX_HOME:-/opt/dx}"
 DX_BIN_DIR="${DX_BIN_DIR:-/usr/local/bin}"
 FEATURE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # renovate: datasource=github-tags depName=.devcontainer/components/agents packageName=Gildraen/dx-agents
-agents_version="v0.3.0"
+agents_version="0.3.0"
 agents_commit="b61d5030978de234c6c6623715c27cba0c3e2381"
 # renovate: datasource=github-tags depName=.devcontainer/components/tools packageName=Gildraen/dx-tools
-tools_version="v0.2.0"
+tools_version="0.2.0"
 tools_commit="340e66482239419544ed405079bce4e8395dbc6e"
 download_root="$(mktemp -d)"
 trap 'rm -rf "$download_root"' EXIT
