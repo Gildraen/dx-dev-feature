@@ -6,21 +6,29 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   validate:
+    uses: Gildraen/ci-workflows/.github/workflows/reusable-validate.yml@eabb9d61ea2a827476f46e7e3e9577d956d8f470 # 0.2.0
+
+  test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: node scripts/validate-contract.mjs
-      - run: bash -n src/dev-prerequisites/install.sh test/dev-prerequisites/test.sh scripts/feature-test.sh
-      - uses: devcontainers/action@bef2cf2d1a019b00b45e184f83035e01bd1972f3 # v1.4.4
+      - uses: go-task/setup-task@a00fbb05ce67b35648be3c78cbc9fd85354c757e # v2.2.0
         with:
-          validate-only: "true"
-          base-path-to-features: "./src"
-          generate-docs: "false"
+          version: 3.53.1
+      - name: Run offline tests
+        env:
+          TASK_REMOTE_TRUSTED_HOSTS: github.com
+        run: task test
 
   feature-test:
     runs-on: ubuntu-latest
@@ -28,3 +36,14 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: bash scripts/feature-test.sh
+
+  feature-manifest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: devcontainers/action@bef2cf2d1a019b00b45e184f83035e01bd1972f3 # v1.4.4
+        with:
+          validate-only: "true"
+          base-path-to-features: "./src"
+          generate-docs: "false"
