@@ -47,9 +47,8 @@ The root Taskfile includes the published `dx-tools` Taskfile for the
 
 Release Please requires the repository variable
 `RELEASE_PLEASE_APP_CLIENT_ID` and secret `RELEASE_PLEASE_APP_PRIVATE_KEY`.
-Feature publication remains disabled until `FEATURE_PUBLISH_ENABLED` is set
-to `true`. Before enabling it, first disable or retarget the old publisher in
-`Gildraen/dx`, then grant `Gildraen/dx-dev-feature` the Write role under
+Feature publication runs for a matching published GitHub Release. Before
+creating the first release, grant `Gildraen/dx-dev-feature` the Write role under
 **Manage Actions access** for the existing `dx` Feature and collection
 packages. The package is already public; if a new package is ever created,
 GHCR makes it private by default and changing it to public is irreversible.
