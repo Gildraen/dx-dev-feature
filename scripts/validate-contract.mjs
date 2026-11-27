@@ -93,9 +93,8 @@ assert.deepEqual(releaseConfig.packages["."]["extra-files"], [
     jsonpath: "$.version",
   },
 ]);
-assert.match(releaseWorkflow, /FEATURE_PUBLISH_ENABLED/);
-assert.match(releaseWorkflow, /if: vars\.FEATURE_PUBLISH_ENABLED == 'true'/);
 assert.match(releaseWorkflow, /on:\n  release:\n    types:\n      - published/);
+assert.doesNotMatch(releaseWorkflow, /FEATURE_PUBLISH_ENABLED/);
 assert.match(releaseWorkflow, /test "\$RELEASE_TAG" = "\$feature_version"/);
 assert.match(releaseWorkflow, /features-namespace: "gildraen\/dx"/);
 assert.match(releasePleaseWorkflow, /RELEASE_PLEASE_APP_CLIENT_ID/);
