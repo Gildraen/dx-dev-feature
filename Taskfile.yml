@@ -2,7 +2,7 @@ version: '3'
 
 includes:
   tools:
-    taskfile: https://github.com/Gildraen/dx-tools/raw/340e66482239419544ed405079bce4e8395dbc6e/taskfiles/base.yml # v0.2.0
+    taskfile: https://github.com/Gildraen/dx-tools/raw/340e66482239419544ed405079bce4e8395dbc6e/taskfiles/base.yml # 0.2.0
 
 tasks:
   default:

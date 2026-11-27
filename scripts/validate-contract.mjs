@@ -78,10 +78,11 @@ assert.ok(cliManager, "Missing Renovate manager for the Dev Container CLI pin");
 assert.equal(cliManager.datasourceTemplate, "npm");
 const cliVersion = new RegExp(cliManager.matchStrings[0]).exec(featureTest)?.groups.currentValue;
 assert.match(cliVersion, semverPattern);
-assert.match(
-  taskfile,
-  /https:\/\/github\.com\/Gildraen\/dx-tools\/raw\/[0-9a-f]{40}\/taskfiles\/base\.yml\s+# v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:[-+][0-9A-Za-z.+-]+)?/,
+const taskfilePin = taskfile.match(
+  /https:\/\/github\.com\/Gildraen\/dx-tools\/raw\/(?<commit>[0-9a-f]{40})\/taskfiles\/base\.yml\s+# (?<version>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))(?=\s|$)/,
 );
+assert.ok(taskfilePin, "Missing SHA-pinned dx-tools Taskfile include and stable tag");
+assert.match(taskfilePin.groups.version, semverPattern);
 assert.equal(releaseConfig["include-v-in-tag"], false);
 assert.match(releaseConfig["bootstrap-sha"], /^[0-9a-f]{40}$/);
 assert.equal(releaseConfig.packages["."]["package-name"], "dx");
